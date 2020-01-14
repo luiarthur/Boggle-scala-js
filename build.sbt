@@ -17,14 +17,23 @@ version := "0.1.0"
 scalaVersion := "2.12.8" // or any other Scala version >= 2.10.2
 
 libraryDependencies ++= Seq(
+  "org.scala-js" %%% "scalajs-dom" % "0.9.7",
+  "org.querki" %%% "jquery-facade" % "1.2",
   "org.scalatest" %%% "scalatest" % "3.0.0" % "test"
 )
 
 enablePlugins(ScalaJSPlugin)
 
-// This is an application with a main method
-// scalaJSUseMainModuleInitializer := true
+// This is an application with a main method.
+// Boggle.Main.main() is automatically run at the end of the fastopt.js script.
+scalaJSUseMainModuleInitializer := true
 
+// Include js dependencies.
+// Dependencies (here jQuery) will be bundled into one file.
+skip in packageJSDependencies := false
+jsDependencies ++= Seq(
+  "org.webjars" % "jquery" % "2.2.1" / "jquery.js" minified "jquery.min.js"
+)
 
 // Stuff for cpFastJS and cpFullJS below
 
@@ -38,9 +47,20 @@ def cpReplaceFile(pathToSrc: String, destDir: String="docs/assets/js") {
   )
 }
 
-lazy val cpFastJS = taskKey[Unit]("Copies compiled js file (from fastOptJS) to /doc/")
+lazy val cpFastJS = taskKey[Unit]("Copies compiled js files (from fastOptJS) to /doc/")
 cpFastJS := {
   val pathToFastOptJS = (Compile / fastOptJS).value.data.toString
-  println("cpFastJS: Copying compiled js file (from fastOptJS) to /doc/ ...")
+  val pathToJSDeps = pathToFastOptJS.replace("-fastopt.", "-jsdeps.")
+  println("cpFastJS: Copying compiled js files (from fastOptJS) to /doc/ ...")
   cpReplaceFile(pathToFastOptJS)
+  cpReplaceFile(pathToJSDeps)
+}
+
+lazy val cpOptJS = taskKey[Unit]("Copies compiled js files (from fullOptJS) to /doc/")
+cpOptJS := {
+  val pathToOptJS = (Compile / fullOptJS).value.data.toString
+  val pathToMinJSDeps = pathToOptJS.replace("-opt.js", "-jsdeps.min.js")
+  println("cpFastJS: Copying compiled js files (from fastOptJS) to /doc/ ...")
+  cpReplaceFile(pathToOptJS)
+  cpReplaceFile(pathToMinJSDeps)
 }
