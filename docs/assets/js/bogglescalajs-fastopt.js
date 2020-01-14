@@ -4073,7 +4073,7 @@ function $h_LBoggle_Main$() {
 }
 $h_LBoggle_Main$.prototype = $c_LBoggle_Main$.prototype;
 $c_LBoggle_Main$.prototype.getDict__sci_Vector = (function() {
-  var thiz = this.readContent__T__T("Boggle-scala-js/assets/txt/scrabble_dict.txt");
+  var thiz = this.readContent__T__T("/assets/txt/scrabble_dict.txt");
   var thiz$1 = $as_T(thiz.trim());
   var xs = $m_sjsr_RuntimeString$().split__T__T__I__AT(thiz$1, "\n", 0);
   $m_sci_Vector$();
@@ -4099,7 +4099,7 @@ $c_LBoggle_Main$.prototype.init___ = (function() {
   return this
 });
 $c_LBoggle_Main$.prototype.getDice__sci_Vector = (function() {
-  var thiz = this.readContent__T__T("Boggle-scala-js/assets/txt/dice.txt");
+  var thiz = this.readContent__T__T("/assets/txt/dice.txt");
   var thiz$1 = $as_T(thiz.trim());
   var xs = $m_sjsr_RuntimeString$().split__T__T__I__AT(thiz$1, "\n", 0);
   $m_sci_Vector$();
