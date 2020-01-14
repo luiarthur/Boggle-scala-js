@@ -25,6 +25,9 @@ enablePlugins(ScalaJSPlugin)
 // This is an application with a main method
 // scalaJSUseMainModuleInitializer := true
 
+
+// Stuff for cpFastJS and cpFullJS below
+
 def cpReplaceFile(pathToSrc: String, destDir: String="docs/assets/js") {
   val srcFileName = file(pathToSrc).getName
 
@@ -35,11 +38,9 @@ def cpReplaceFile(pathToSrc: String, destDir: String="docs/assets/js") {
   )
 }
 
-// Stuff for cpFastJS and cpFullJS
 lazy val cpFastJS = taskKey[Unit]("Copies compiled js file (from fastOptJS) to /doc/")
 cpFastJS := {
   val pathToFastOptJS = (Compile / fastOptJS).value.data.toString
-  // println(pathToFastOptJS)
   println("cpFastJS: Copying compiled js file (from fastOptJS) to /doc/ ...")
   cpReplaceFile(pathToFastOptJS)
 }

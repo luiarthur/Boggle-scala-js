@@ -4,6 +4,14 @@ import Helper.isSquare
 import org.scalatest._
 
 class TestSuite extends FunSuite {
+  val testDice: Array[Die] = {
+    Array.fill(16)(Die(Array("A", "B", "N")))
+  }
+
+  val testDict: Array[String] = {
+    Array("BAN", "NAB", "ANN", "CAN", "BANANA")
+  }
+
   test("isSquare") {
     List.range(0, 100).foreach{
       n => assert(isSquare(n * n))
@@ -34,7 +42,7 @@ class TestSuite extends FunSuite {
     import scala.scalajs.js
     import js.JSConverters._
 
-    val board = Board()
+    val board = Board(testDice, testDict)
     board.shuffle()
     val sol = board.solve()
 
@@ -42,8 +50,6 @@ class TestSuite extends FunSuite {
     println(board)
 
     println("Solution:")
-    println(sol)
+    println(sol.toList)
   }
-
-
 }

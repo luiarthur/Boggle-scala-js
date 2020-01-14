@@ -1,41 +1,33 @@
 package Boggle
 
-import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
-import scala.scalajs.js
-import js.JSConverters._
+// import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
+// import scala.scalajs.js
+// import js.JSConverters._
 
 import scala.util.Random
 import Helper.isSquare
 
-@JSExportTopLevel("Board")
-case class Board(dice: js.Array[Die] = Helper.defaultDice,
-                 dictionary: js.Array[String] = Helper.defaultDict,
+case class Board(dice: Array[Die],
+                 dictionary: Array[String],
                  minLetters: Int=3) {
 
-  @JSExport
   val numDice = dice.size
   require(isSquare(numDice))
 
-  @JSExport
   val nrow = math.sqrt(numDice).toInt
-
-  @JSExport
   val ncol = nrow
 
-  @JSExport
   var letters = (new Matrix(dice.toArray.map(_.roll), nrow, ncol))
   letters.shuffle
 
-  @JSExport
   val shortDict = dictionary.filter(w => w.length >= minLetters)
 
-  @JSExport
   def shuffle(): Unit = {
     letters = (new Matrix(dice.toArray.map(_.roll), nrow, ncol))
     letters.shuffle
   }
 
-  private val allMoves = Vector(
+  private val allMoves = List(
     Coord(0, 1),
     Coord(1, 0),
     Coord(1, 1),
@@ -71,18 +63,17 @@ case class Board(dice: js.Array[Die] = Helper.defaultDice,
   }
 
   /** Solve entier Boggle board. */
-  @JSExport
-  def solve(): js.Array[String] = {
+  def solve(): Array[String] = {
     val allSolutions = Array.tabulate(nrow, ncol){
       (r, c) => _solve(shortDict, Array(Coord(r, c)))
     }.map(_.flatten)
 
-    return allSolutions.flatten.distinct.toJSArray
+    return allSolutions.flatten.distinct
                        .sorted
                        .sortBy(_.length)
   }
 
-  private def _solve(dict: js.Array[String], path: Array[Coord],
+  private def _solve(dict: Array[String], path: Array[Coord],
                      solution: Array[String]=Array()): Array[String] = {
     if (dict.size == 0) return solution else {
       // All valid moves
