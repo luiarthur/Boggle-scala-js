@@ -2,7 +2,7 @@ package Boggle
 
 import scala.util.Random
 
-case class Die(faces: Array[String]) {
+case class Die(faces: Vector[String]) {
   val numFaces = faces.size
 
   def roll(): String = {

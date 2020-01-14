@@ -7,8 +7,8 @@ package Boggle
 import scala.util.Random
 import Helper.isSquare
 
-case class Board(dice: Array[Die],
-                 dictionary: Array[String],
+case class Board(dice: Vector[Die],
+                 dictionary: Vector[String],
                  minLetters: Int=3) {
 
   val numDice = dice.size
@@ -17,14 +17,12 @@ case class Board(dice: Array[Die],
   val nrow = math.sqrt(numDice).toInt
   val ncol = nrow
 
-  var letters = (new Matrix(dice.toArray.map(_.roll), nrow, ncol))
-  letters.shuffle
+  var letters = (new Matrix(dice.map(_.roll), nrow, ncol)).shuffled
 
   val shortDict = dictionary.filter(w => w.length >= minLetters)
 
   def shuffle(): Unit = {
-    letters = (new Matrix(dice.toArray.map(_.roll), nrow, ncol))
-    letters.shuffle
+    letters = (new Matrix(dice.map(_.roll), nrow, ncol)).shuffled
   }
 
   private val allMoves = List(
@@ -40,11 +38,11 @@ case class Board(dice: Array[Die],
 
   override def toString() = letters.toString()
 
-  def chain(path: Array[Coord]): String = {
+  def chain(path: Vector[Coord]): String = {
     path.map(coord => letters(coord.x, coord.y)).mkString("")
   }
 
-  def visited(path: Array[Coord], pos: Coord): Boolean = {
+  def visited(path: Vector[Coord], pos: Coord): Boolean = {
     return path.contains(pos)
   }
 
@@ -53,19 +51,19 @@ case class Board(dice: Array[Die],
     return r >= 0 && c >= 0 && r < nrow && c < ncol
   }
 
-  def makeMove(path: Array[Coord], move: Coord): Coord = {
+  def makeMove(path: Vector[Coord], move: Coord): Coord = {
     return path.last + move
   }
 
-  def isValidMove(path: Array[Coord], move: Coord): Boolean = {
+  def isValidMove(path: Vector[Coord], move: Coord): Boolean = {
     val pos = makeMove(path, move)
     return (!visited(path, pos)) && onBoard(pos)
   }
 
   /** Solve entier Boggle board. */
-  def solve(): Array[String] = {
-    val allSolutions = Array.tabulate(nrow, ncol){
-      (r, c) => _solve(shortDict, Array(Coord(r, c)))
+  def solve(): Vector[String] = {
+    val allSolutions = Vector.tabulate(nrow, ncol){
+      (r, c) => _solve(shortDict, Vector(Coord(r, c)))
     }.map(_.flatten)
 
     return allSolutions.flatten.distinct
@@ -73,8 +71,8 @@ case class Board(dice: Array[Die],
                        .sortBy(_.length)
   }
 
-  private def _solve(dict: Array[String], path: Array[Coord],
-                     solution: Array[String]=Array()): Array[String] = {
+  private def _solve(dict: Vector[String], path: Vector[Coord],
+                     solution: Vector[String]=Vector()): Vector[String] = {
     if (dict.size == 0) return solution else {
       // All valid moves
       val validMoves = allMoves.filter{move => isValidMove(path, move)}
@@ -88,7 +86,7 @@ case class Board(dice: Array[Die],
         _solve(newDict, newPath, newSolution)
       }
 
-      return sols.flatten.distinct.toArray
+      return sols.flatten.distinct.toVector
     }
   }
 }

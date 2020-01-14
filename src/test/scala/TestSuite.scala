@@ -4,12 +4,12 @@ import Helper.isSquare
 import org.scalatest._
 
 class TestSuite extends FunSuite {
-  val testDice: Array[Die] = {
-    Array.fill(16)(Die(Array("A", "B", "N")))
+  val testDice: Vector[Die] = {
+    Vector.fill(16)(Die(Vector("A", "B", "N")))
   }
 
-  val testDict: Array[String] = {
-    Array("BAN", "NAB", "ANN", "CAN", "BANANA")
+  val testDict: Vector[String] = {
+    Vector("BAN", "NAB", "ANN", "CAN", "BANANA")
   }
 
   test("isSquare") {
@@ -23,18 +23,16 @@ class TestSuite extends FunSuite {
   }
 
   test("Matrix") {
-    val m = new Boggle.Matrix(Array.range(0,15), 3, 5)
-    m(0, 0) = 20
+    val m = new Boggle.Matrix(Vector.range(0,15), 3, 5)
     println(m)
     println()
 
-    m.shuffle()
-    println(m)
+    println(m.shuffled)
     println()
   }
 
   test("Path contains Coord") {
-    val path = Array(Coord(1,0), Coord(2, 2))
+    val path = Vector(Coord(1,0), Coord(2, 2))
     assert(path.contains(Coord(2, 2)))
   }
 
@@ -43,7 +41,6 @@ class TestSuite extends FunSuite {
     import js.JSConverters._
 
     val board = Board(testDice, testDict)
-    board.shuffle()
     val sol = board.solve()
 
     println("Board:")
