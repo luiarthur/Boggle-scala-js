@@ -3,9 +3,13 @@
 }
 
 #board .scratch {
-  font-size: xxx-large;
+  font-size: x-large;
 }
 
 #solution .scratch {
-  font-size: xx-large;
+  font-size: large;
+}
+
+body {
+  padding: 5%;
 }
