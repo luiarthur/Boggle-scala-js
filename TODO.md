@@ -11,7 +11,8 @@ Make this pretty.
 - [Make it run after compile & test][3]
 - [Make my own sbt template][4]
     - [SBT new and Templates][5]
-- Use jekyll so that I don't have to use hacky solution in `index.html`
+- Use jekyll so that I don't have to use hacky solution in `index.html` 
+  and `getDict/getDice`
 
 [1]: https://github.com/pme123/github-pages-demo
 [2]: https://stackoverflow.com/questions/8554992/how-to-attach-custom-task-to-execute-before-the-test-task-in-sbt
