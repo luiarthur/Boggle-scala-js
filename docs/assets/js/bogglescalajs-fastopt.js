@@ -4061,9 +4061,11 @@ function $m_sr_Statics$() {
 /** @constructor */
 function $c_LBoggle_Main$() {
   $c_O.call(this);
+  this.baseURL$1 = null;
   this.dice$1 = null;
   this.dict$1 = null;
-  this.board$1 = null
+  this.board$1 = null;
+  this.bitmap$0$1 = false
 }
 $c_LBoggle_Main$.prototype = new $h_O();
 $c_LBoggle_Main$.prototype.constructor = $c_LBoggle_Main$;
@@ -4073,7 +4075,7 @@ function $h_LBoggle_Main$() {
 }
 $h_LBoggle_Main$.prototype = $c_LBoggle_Main$.prototype;
 $c_LBoggle_Main$.prototype.getDict__sci_Vector = (function() {
-  var thiz = this.readContent__T__T("/Boggle-scala-js/assets/txt/scrabble_dict.txt");
+  var thiz = this.readContent__T__T((this.baseURL__sjs_js_UndefOr() + "/assets/txt/scrabble_dict.txt"));
   var thiz$1 = $as_T(thiz.trim());
   var xs = $m_sjsr_RuntimeString$().split__T__T__I__AT(thiz$1, "\n", 0);
   $m_sci_Vector$();
@@ -4099,7 +4101,7 @@ $c_LBoggle_Main$.prototype.init___ = (function() {
   return this
 });
 $c_LBoggle_Main$.prototype.getDice__sci_Vector = (function() {
-  var thiz = this.readContent__T__T("/Boggle-scala-js/assets/txt/dice.txt");
+  var thiz = this.readContent__T__T((this.baseURL__sjs_js_UndefOr() + "/assets/txt/dice.txt"));
   var thiz$1 = $as_T(thiz.trim());
   var xs = $m_sjsr_RuntimeString$().split__T__T__I__AT(thiz$1, "\n", 0);
   $m_sci_Vector$();
@@ -4142,8 +4144,15 @@ $c_LBoggle_Main$.prototype.getDice__sci_Vector = (function() {
   };
   return $as_sci_Vector(b$1.result__O())
 });
+$c_LBoggle_Main$.prototype.baseURL$lzycompute__p1__sjs_js_UndefOr = (function() {
+  if ((!this.bitmap$0$1)) {
+    this.baseURL$1 = (0, $m_Lorg_querki_jquery_package$().$$$1)("#meta-baseurl").attr("baseURL");
+    this.bitmap$0$1 = true
+  };
+  return this.baseURL$1
+});
 $c_LBoggle_Main$.prototype.showBoard__V = (function() {
-  (0, $m_Lorg_querki_jquery_package$().$$$1)("#board-grid").empty();
+  (0, $m_Lorg_querki_jquery_package$().$$$1)("#board .scratch").empty();
   this.board$1.shuffle__V();
   var this$6 = this.board$1.letters$1.vec$1;
   var this$7 = this$6.iterator__sci_VectorIterator();
@@ -4164,16 +4173,16 @@ $c_LBoggle_Main$.prototype.showBoard__V = (function() {
     };
     var thiz = $as_sc_TraversableOnce(b.result__O()).mkString__T__T(" ");
     var paddedRow = $as_T(thiz.split(" ").join("&nbsp"));
-    var jsx$1 = (0, $m_Lorg_querki_jquery_package$().$$$1)("#board-grid");
+    var jsx$1 = (0, $m_Lorg_querki_jquery_package$().$$$1)("#board .scratch");
     var a = (("<p>" + paddedRow) + "</p>");
     jsx$1.append(a)
   };
-  (0, $m_Lorg_querki_jquery_package$().$$$1)("#solution-grid").empty()
+  (0, $m_Lorg_querki_jquery_package$().$$$1)("#solution .scratch").empty()
 });
 $c_LBoggle_Main$.prototype.showSolution__V = (function() {
   var solution = this.board$1.solve__sci_Vector();
-  (0, $m_Lorg_querki_jquery_package$().$$$1)("#solution-grid").empty();
-  var jsx$1 = (0, $m_Lorg_querki_jquery_package$().$$$1)("#solution-grid");
+  (0, $m_Lorg_querki_jquery_package$().$$$1)("#solution .scratch").empty();
+  var jsx$1 = (0, $m_Lorg_querki_jquery_package$().$$$1)("#solution .scratch");
   var a = (("<p>" + $f_sc_TraversableOnce__mkString__T__T__T__T(solution, "", ", ", "")) + "</p>");
   jsx$1.append(a)
 });
@@ -4184,17 +4193,11 @@ $c_LBoggle_Main$.prototype.main__V = (function() {
   this$3.java$lang$JSConsoleBasedPrintStream$$printString__T__V("Let's play Boggle!\n")
 });
 $c_LBoggle_Main$.prototype.setupUI__V = (function() {
-  (0, $m_Lorg_querki_jquery_package$().$$$1)("#root").append("<div id='board' style='font-family: monospace; font-size: 25'></div>");
-  (0, $m_Lorg_querki_jquery_package$().$$$1)("#root").append("<div id='solution' style='font-family: monospace; font-size: 25; width: 50%'></div>");
-  (0, $m_Lorg_querki_jquery_package$().$$$1)("#board").append("<button type='button' id='btn-shuffle'>Shuffle Board</button>");
-  (0, $m_Lorg_querki_jquery_package$().$$$1)("#board").append("<div id='board-grid'><div>");
   (0, $m_Lorg_querki_jquery_package$().$$$1)("#btn-shuffle").click($m_Lorg_querki_jquery_package$().f02EventHandler__F0__sjs_js_$bar(new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function($this) {
     return (function() {
       $m_LBoggle_Main$().showBoard__V()
     })
   })(this))));
-  (0, $m_Lorg_querki_jquery_package$().$$$1)("#solution").append("<button type='button' id='btn-solution'>Show Solution</button>");
-  (0, $m_Lorg_querki_jquery_package$().$$$1)("#solution").append("<div id='solution-grid'><div>");
   (0, $m_Lorg_querki_jquery_package$().$$$1)("#btn-solution").click($m_Lorg_querki_jquery_package$().f02EventHandler__F0__sjs_js_$bar(new $c_sjsr_AnonFunction0().init___sjs_js_Function0((function(this$2$1) {
     return (function() {
       $m_LBoggle_Main$().showSolution__V()
@@ -4220,6 +4223,9 @@ $c_LBoggle_Main$.prototype.readContent__T__T = (function(url) {
   };
   $m_Lorg_querki_jquery_package$().$$$1.ajax(ajaxSettings);
   return $as_T(content.elem$1)
+});
+$c_LBoggle_Main$.prototype.baseURL__sjs_js_UndefOr = (function() {
+  return ((!this.bitmap$0$1) ? this.baseURL$lzycompute__p1__sjs_js_UndefOr() : this.baseURL$1)
 });
 $c_LBoggle_Main$.prototype.main = (function() {
   return this.$$js$exported$meth$main__O()

@@ -1,8 +1,21 @@
 SHELL := /bin/bash
 
-.PHONY: all serve
+.PHONY: all serve clean_serve clean
 	
-all: serve
+# all: serve
+# 
+# serve:
+# 	python3 -m http.server 9000
+
+.PHONY: clean serve clean_serve
+
+all: clean_serve
+
+clean:
+	rm -rf _site
 
 serve:
-	python3 -m http.server 9000
+	bundle exec jekyll serve --incremental
+
+clean_serve: clean serve
+

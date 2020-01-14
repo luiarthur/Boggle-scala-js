@@ -1,16 +1,46 @@
+---
+---
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <script src="/assets/js/bogglescalajs-jsdeps.js"></script>
-  <script src="/Boggle-scala-js/assets/js/bogglescalajs-jsdeps.js"></script>
-  <!--script src="/assets/js/bogglescalajs-jsdeps.min.js"></script-->
+  <meta baseURL="{{site.baseurl}}" id="meta-baseurl">
 
-  <body>
-    <div id="root" align='center'></div>
-  </body>
+  <!-- scala js deps -->
+  <script src="{{'/assets/js/bogglescalajs-jsdeps.js' | prepend: site.baseurl}}"></script>
 
-  <script src="/assets/js/bogglescalajs-fastopt.js"></script>
-  <script src="/Boggle-scala-js/assets/js/bogglescalajs-fastopt.js"></script>
-  <!--script src="/assets/js/bogglescalajs-opt.js"></script-->
+  <!-- bootstrap -->
+  <script src="{{'/assets/js/bootstrap.min.js' | prepend: site.baseurl}}"></script>
+  <link rel="stylesheet" href="{{'/assets/css/bootstrap.min.css'| prepend: site.baseurl}}">
+  <!-- custom css -->
+  <link rel="stylesheet" href="{{'/assets/css/custom.css'| prepend: site.baseurl}}">
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1" align='center'>
+        <h1>Boggle</h1>
+        <br>
+
+        <div id='board'>
+          <div class='scratch'></div>
+          <button type='button' class='btn-lg btn-primary' id='btn-shuffle'>
+            Shuffle Board
+          </button>
+        </div>
+        <br>
+
+        <div id='solution'>
+          <div class='scratch'></div>
+          <button type='button' class='btn-lg' id='btn-solution'>Show Solution</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+<!-- scala js -->
+<script src="{{'/assets/js/bogglescalajs-fastopt.js' | prepend: site.baseurl}}"></script>
 </html>
