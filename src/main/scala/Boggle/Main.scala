@@ -37,12 +37,12 @@ object Main extends js.JSApp {
   }
 
   def getDice() = {
-    val lines = readContent("/assets/txt/dice.txt").trim.split("\n").toVector
+    val lines = readContent("/Boggle-scala-js/assets/txt/dice.txt").trim.split("\n").toVector
     lines.map(line => Die(line.trim.split(",").toVector))
   }
 
   def getDict() = {
-    readContent("/assets/txt/scrabble_dict.txt").trim.split("\n").toVector
+    readContent("/Boggle-scala-js/assets/txt/scrabble_dict.txt").trim.split("\n").toVector
   }
 
   def setupUI() {
