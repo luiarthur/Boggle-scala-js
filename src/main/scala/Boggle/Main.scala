@@ -39,12 +39,14 @@ object Main extends js.JSApp {
   }
 
   def getDice() = {
-    val lines = readContent(s"${baseURL}/assets/txt/dice.txt").trim.split("\n").toVector
+    val pathToDice = s"${baseURL}/assets/txt/dice.txt"
+    val lines = readContent(pathToDice).trim.split("\n").toVector
     lines.map(line => Die(line.trim.split(",").toVector))
   }
 
   def getDict() = {
-    readContent(s"${baseURL}/assets/txt/scrabble_dict.txt").trim.split("\n").toVector
+    val pathToDict = s"${baseURL}/assets/txt/scrabble_dict.txt"
+    readContent(pathToDict).trim.split("\n").toVector
   }
 
   def setupUI() {
@@ -74,9 +76,15 @@ object Main extends js.JSApp {
   }
 
   def showSolution() {
-    val solution = board.solve()
-    $("#solution .scratch").empty()
-    $("#solution .scratch").append(s"<p>${solution.mkString(", ")}</p>")
+    if ($("#solution .scratch").children().length == 0) {
+      println("Solving board ...")
+      val solution = board.solve()
+      $("#solution .scratch").empty()
+      $("#solution .scratch").append(s"<p>${solution.mkString(", ")}</p>")
+    } else {
+      println("Toggle solutions.")
+      $("#solution .scratch p").toggleClass("hide")
+    }
   }
 
   def main() = {

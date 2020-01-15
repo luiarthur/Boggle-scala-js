@@ -4075,7 +4075,8 @@ function $h_LBoggle_Main$() {
 }
 $h_LBoggle_Main$.prototype = $c_LBoggle_Main$.prototype;
 $c_LBoggle_Main$.prototype.getDict__sci_Vector = (function() {
-  var thiz = this.readContent__T__T((this.baseURL__sjs_js_UndefOr() + "/assets/txt/scrabble_dict.txt"));
+  var pathToDict = (this.baseURL__sjs_js_UndefOr() + "/assets/txt/scrabble_dict.txt");
+  var thiz = this.readContent__T__T(pathToDict);
   var thiz$1 = $as_T(thiz.trim());
   var xs = $m_sjsr_RuntimeString$().split__T__T__I__AT(thiz$1, "\n", 0);
   $m_sci_Vector$();
@@ -4101,7 +4102,8 @@ $c_LBoggle_Main$.prototype.init___ = (function() {
   return this
 });
 $c_LBoggle_Main$.prototype.getDice__sci_Vector = (function() {
-  var thiz = this.readContent__T__T((this.baseURL__sjs_js_UndefOr() + "/assets/txt/dice.txt"));
+  var pathToDice = (this.baseURL__sjs_js_UndefOr() + "/assets/txt/dice.txt");
+  var thiz = this.readContent__T__T(pathToDice);
   var thiz$1 = $as_T(thiz.trim());
   var xs = $m_sjsr_RuntimeString$().split__T__T__I__AT(thiz$1, "\n", 0);
   $m_sci_Vector$();
@@ -4180,11 +4182,24 @@ $c_LBoggle_Main$.prototype.showBoard__V = (function() {
   (0, $m_Lorg_querki_jquery_package$().$$$1)("#solution .scratch").empty()
 });
 $c_LBoggle_Main$.prototype.showSolution__V = (function() {
-  var solution = this.board$1.solve__sci_Vector();
-  (0, $m_Lorg_querki_jquery_package$().$$$1)("#solution .scratch").empty();
-  var jsx$1 = (0, $m_Lorg_querki_jquery_package$().$$$1)("#solution .scratch");
-  var a = (("<p>" + $f_sc_TraversableOnce__mkString__T__T__T__T(solution, "", ", ", "")) + "</p>");
-  jsx$1.append(a)
+  var qual$1 = (0, $m_Lorg_querki_jquery_package$().$$$1)("#solution .scratch");
+  var jsx$1 = qual$1.children().length;
+  if (($uI(jsx$1) === 0)) {
+    var this$7 = $m_s_Console$();
+    var this$8 = $as_Ljava_io_PrintStream(this$7.outVar$2.v$1);
+    this$8.java$lang$JSConsoleBasedPrintStream$$printString__T__V("Solving board ...\n");
+    var solution = this.board$1.solve__sci_Vector();
+    (0, $m_Lorg_querki_jquery_package$().$$$1)("#solution .scratch").empty();
+    var jsx$2 = (0, $m_Lorg_querki_jquery_package$().$$$1)("#solution .scratch");
+    var a = (("<p>" + $f_sc_TraversableOnce__mkString__T__T__T__T(solution, "", ", ", "")) + "</p>");
+    jsx$2.append(a)
+  } else {
+    var this$25 = $m_s_Console$();
+    var this$26 = $as_Ljava_io_PrintStream(this$25.outVar$2.v$1);
+    this$26.java$lang$JSConsoleBasedPrintStream$$printString__T__V("Toggle solutions.\n");
+    var qual$2 = (0, $m_Lorg_querki_jquery_package$().$$$1)("#solution .scratch p");
+    qual$2.toggleClass("hide")
+  }
 });
 $c_LBoggle_Main$.prototype.main__V = (function() {
   this.setupUI__V();
@@ -16082,14 +16097,14 @@ $c_sci_WrappedString.prototype.apply__I__O = (function(idx) {
 $c_sci_WrappedString.prototype.lengthCompare__I__I = (function(len) {
   return $f_sc_IndexedSeqOptimized__lengthCompare__I__I(this, len)
 });
-$c_sci_WrappedString.prototype.sameElements__sc_GenIterable__Z = (function(that) {
-  return $f_sc_IndexedSeqOptimized__sameElements__sc_GenIterable__Z(this, that)
-});
 $c_sci_WrappedString.prototype.apply__O__O = (function(v1) {
   var n = $uI(v1);
   var thiz = this.self$4;
   var c = (65535 & $uI(thiz.charCodeAt(n)));
   return new $c_jl_Character().init___C(c)
+});
+$c_sci_WrappedString.prototype.sameElements__sc_GenIterable__Z = (function(that) {
+  return $f_sc_IndexedSeqOptimized__sameElements__sc_GenIterable__Z(this, that)
 });
 $c_sci_WrappedString.prototype.exists__F1__Z = (function(p) {
   return $f_sc_IndexedSeqOptimized__exists__F1__Z(this, p)
@@ -16100,11 +16115,11 @@ $c_sci_WrappedString.prototype.isEmpty__Z = (function() {
 $c_sci_WrappedString.prototype.thisCollection__sc_Traversable = (function() {
   return this
 });
-$c_sci_WrappedString.prototype.companion__scg_GenericCompanion = (function() {
-  return $m_sci_IndexedSeq$()
-});
 $c_sci_WrappedString.prototype.toString__T = (function() {
   return this.self$4
+});
+$c_sci_WrappedString.prototype.companion__scg_GenericCompanion = (function() {
+  return $m_sci_IndexedSeq$()
 });
 $c_sci_WrappedString.prototype.foreach__F1__V = (function(f) {
   $f_sc_IndexedSeqOptimized__foreach__F1__V(this, f)
@@ -16130,11 +16145,11 @@ $c_sci_WrappedString.prototype.sizeHintIfCheap__I = (function() {
 $c_sci_WrappedString.prototype.thisCollection__sc_Seq = (function() {
   return this
 });
-$c_sci_WrappedString.prototype.hashCode__I = (function() {
-  return $m_s_util_hashing_MurmurHash3$().seqHash__sc_Seq__I(this)
-});
 $c_sci_WrappedString.prototype.copyToArray__O__I__I__V = (function(xs, start, len) {
   $f_sc_IndexedSeqOptimized__copyToArray__O__I__I__V(this, xs, start, len)
+});
+$c_sci_WrappedString.prototype.hashCode__I = (function() {
+  return $m_s_util_hashing_MurmurHash3$().seqHash__sc_Seq__I(this)
 });
 $c_sci_WrappedString.prototype.init___T = (function(self) {
   this.self$4 = self;

@@ -6,7 +6,7 @@
 
 <head>
   <meta baseURL="{{site.baseurl}}" id="meta-baseurl">
-  <meta name="viewport" content="width=device-width,maximum-scale=2">
+  <meta name="viewport" content="width=device-width,maximum-scale=1">
 
   <!-- scala js deps -->
   <script src="{{'/assets/js/bogglescalajs-jsdeps.js' | prepend: site.baseurl}}"></script>
@@ -24,18 +24,21 @@
     <br>
 
     <div id='board'>
-      <div class='scratch'></div>
       <button type='button' class='btn btn-primary' id='btn-shuffle'>
         Shuffle Board
       </button>
+      <br><br>
+      <div class='scratch'></div>
     </div>
-    <br>
+
+    <hr>
 
     <div id='solution'>
-      <div class='scratch'></div>
       <button type='button' class='btn btn-primary' id='btn-solution'>
-        Show Solution
+        Show / Hide Solution
       </button>
+      <br><br>
+      <div class='scratch'></div>
     </div>
   </div>
 </body>
